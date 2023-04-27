@@ -1,0 +1,25 @@
+<h1>Search results for '<%= params[:search] %>'</h1>
+
+<% if @searched_user %>
+  <p>Name: <%= @searched_user.name %></p>
+  <p>Email: <%= @searched_user.email %></p>
+  <p>Number of messages sent: <%= @searched_user.personal_messages.count %></p>
+  <p>Number of messages received: <%= @searched_user.received_conversations.map { |c| c.personal_messages.count }.sum %></p>
+
+  <% if @conversations_with_searched_user.any? %>
+    <h2>Conversations with <%= @searched_user.name %></h2>
+    <ul>
+      <% @conversations_with_searched_user.each do |conversation| %>
+        <li>
+          <%= link_to "Chatting with #{conversation.with(current_user).name}", conversation_path(conversation) %>
+          <br>
+          <em><%= conversation.personal_messages.last.body.truncate(50) %></em>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No conversations found</p>
+  <% end %>
+<% else %>
+  <p>User not found</p>
+<% end %>

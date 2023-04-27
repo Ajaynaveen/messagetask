@@ -1,0 +1,9 @@
+<h1>Your conversations</h1>
+<%= form_tag(search_users_path, method: :get) do %>
+  <%= label_tag(:email, "Search by email:") %>
+  <%= text_field_tag(:email) %>
+  <%= submit_tag("Search") %>
+<% end %>
+<div id="conversations">
+  <%= render @conversations %>
+</div>
